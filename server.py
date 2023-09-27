@@ -32,7 +32,7 @@ def showSummary():
         club = club[0]
         return render_template('welcome.html',club=club,competitions=competitions)
     else:
-        return render_template('index.html',error_message="e-mail does not exist") 
+        return render_template('index.html',error_message="e-mail does not exist")
 
 
 @app.route('/book/<competition>/<club>')
