@@ -39,8 +39,12 @@ def showSummary():
 def book(competition,club):
     foundClub = [c for c in clubs if c['name'] == club][0]
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
+    
+    min_places = 1
+    max_places = 12 if int(foundClub["points"]) > 12 else int(foundClub["points"]) # Ajout d'une double condition >12 si points du club > 12
+    
     if foundClub and foundCompetition:
-        return render_template('booking.html',club=foundClub,competition=foundCompetition)
+        return render_template('booking.html',club=foundClub,competition=foundCompetition, min_places=min_places, max_places=max_places) # Ajour des 2 variables de condition
     else:
         flash("Something went wrong-please try again")
         return render_template('welcome.html', club=club, competitions=competitions)
@@ -52,8 +56,11 @@ def purchasePlaces():
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
     if int(club["points"])>= placesRequired:  # Ajout d'une condition vérifiant si les points du club sont suffisants
-        competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
-        flash('Great-booking complete!')
+        if placesRequired > 12: # Ajout d'une condition vérifiant que le nombre de place est de 12 max
+            flash("You can't book more than 12 places !")
+        else:
+            competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
+            flash('Great-booking complete!')
     else:
         flash("damn you don't have enough points")
         
