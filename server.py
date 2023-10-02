@@ -1,5 +1,6 @@
 import json
 from flask import Flask,render_template,request,redirect,flash,url_for
+import datetime
 
 
 def loadClubs():
@@ -44,10 +45,16 @@ def book(competition,club):
     max_places = 12 if int(foundClub["points"]) > 12 else int(foundClub["points"]) # Ajout d'une double condition >12 si points du club > 12
     
     if foundClub and foundCompetition:
-        return render_template('booking.html',club=foundClub,competition=foundCompetition, min_places=min_places, max_places=max_places) # Ajour des 2 variables de condition
+        competition_date = foundCompetition["date"] # recuperation date dans le json competition
+        today = datetime.date.today() # recup date du jour
+        competition_date = datetime.datetime.strptime(competition_date, "%Y-%m-%d %H:%M:%S").date() # Ici on convertit la date de competition en chaine de caractere
+        if competition_date >= today:
+            return render_template('booking.html',club=foundClub,competition=foundCompetition, min_places=min_places, max_places=max_places) # Ajout des 2 variables de condition
+        else:
+            flash("You can't book places for a past competition")
     else:
         flash("Something went wrong-please try again")
-        return render_template('welcome.html', club=club, competitions=competitions)
+    return render_template('welcome.html', club=club, competitions=competitions)
 
 
 @app.route('/purchasePlaces',methods=['POST'])
