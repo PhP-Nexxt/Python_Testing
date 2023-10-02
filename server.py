@@ -67,6 +67,7 @@ def purchasePlaces():
             flash("You can't book more than 12 places !")
         else:
             competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
+            club["points"] = int(club["points"])-placesRequired # Ici on decompte les places (Bug 5)
             flash('Great-booking complete!')
     else:
         flash("damn you don't have enough points")
