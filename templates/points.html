@@ -4,8 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style> table {   font-family: arial, sans-serif;   border-collapse: collapse;   width: 100%; }  td, th {   border: 1px solid #dddddd;   text-align: left;   padding: 8px; }  tr:nth-child(even) {   background-color: #dddddd; } </style>
 </head>
-<body>
+<body style="margin:50px";>
     <h1>List of club points</h1>
+
+    <hr>
+    <table> <!--Tableau-->
+        <thead> <!--En tete du tableau-->
+            <tr> <!--Ligne-->
+                <th>Name</th> <!--Colonne-->
+                <th>Points</th><!--Colonne-->
+            </tr>
+        </thead>
+        <tbody>
+            {% for club in clubs %} <!-- boucle iteration des clubs -->
+            <tr>
+                <!-- Colonne de contenu -->
+                <td>{{ club.name }}</td>  <!-- Recupere les noms de club du fichier club.json -->
+                <td>{{ club.points }}</td>
+            </tr>
+            {% endfor  %}
+        </tbody>
+    </table>
+    
+    <p>
+        <a href="{{url_for('index') }}"> Return to index </a> <!--Lien vers points-->
+    </p>
 </body>
 </html>
