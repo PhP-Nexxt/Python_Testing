@@ -70,7 +70,7 @@ def purchasePlaces():
             club["points"] = int(club["points"])-placesRequired # Ici on decompte les places (Bug 5)
             flash('Great-booking complete!')
     else:
-        flash("damn you don't have enough points")
+        flash("damn you dont have enough points") # Message
         
     return render_template('welcome.html', club=club, competitions=competitions)
 
