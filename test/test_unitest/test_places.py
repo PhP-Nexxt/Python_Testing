@@ -1,11 +1,11 @@
 from server import app
 
-def test_book_places_with_valid_points(mock_competitions, mock_clubs):
+def test_book_places_less_12(mock_competitions, mock_clubs):
     page_content = "Great-booking complete!" # b = bytes
     data = {
-        "club": "Iron cell",
+        "club": "Simply Down",
         "competition": "Winter Festival",
-        "places": "3",
+        "places": "10",
     }
     with app.test_client() as client: # post vers le route /showSummary
         response = client.post("/purchasePlaces", data = data)
@@ -13,12 +13,12 @@ def test_book_places_with_valid_points(mock_competitions, mock_clubs):
         assert page_content in response.data.decode("utf-8") # Assertion verifie que le page_content se trouve dans response,data
         # print(response.data.decode("utf-8"))
         
-def test_book_places_with_more_points(mock_competitions, mock_clubs):
-    page_content = "damn you dont have enough points" # b = bytes
+def test_book_places_more_12(mock_competitions, mock_clubs):
+    page_content = "You cant book more than 12 places!" # b = bytes
     data = {
-        "club": "Iron cell",
+        "club": "Simply Down",
         "competition": "Winter Festival",
-        "places": "6",
+        "places": "13",
     }
     with app.test_client() as client: # post vers le route /showSummary
         response = client.post("/purchasePlaces", data = data)

@@ -62,9 +62,16 @@ def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
-    if int(club["points"])>= placesRequired:  # Ajout d'une condition vérifiant si les points du club sont suffisants
+    
+    competition_date = competition["date"] # recuperation date dans le json competition
+    today = datetime.date.today() # recup date du jour
+    competition_date = datetime.datetime.strptime(competition_date, "%Y-%m-%d %H:%M:%S").date() # Ici on convertit la date de competition en chaine de caractere
+    if competition_date < today:
+        flash("You cant book places for a past competition")
+    
+    elif int(club["points"])>= placesRequired:  # Ajout d'une condition vérifiant si les points du club sont suffisants
         if placesRequired > 12: # Ajout d'une condition vérifiant que le nombre de place est de 12 max
-            flash("You can't book more than 12 places !")
+            flash("You cant book more than 12 places!")
         else:
             competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
             club["points"] = int(club["points"])-placesRequired # Ici on decompte les places (Bug 5)
