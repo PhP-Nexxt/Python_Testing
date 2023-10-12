@@ -51,7 +51,7 @@ def book(competition,club):
         if competition_date >= today:
             return render_template('booking.html',club=foundClub,competition=foundCompetition, min_places=min_places, max_places=max_places) # Ajout des 2 variables de condition
         else:
-            flash("You can't book places for a past competition")
+            flash("You cant book places for a past competition")
     else:
         flash("Something went wrong-please try again")
     return render_template('welcome.html', club=club, competitions=competitions)
