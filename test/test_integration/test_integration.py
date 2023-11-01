@@ -1,7 +1,7 @@
 from server import app
 from test.conftest import client, mock_competitions, mock_clubs # import des data de test
 
-
+# Processus : l'utilisateur se log, il book des places, on verifie que les places se décomptent bien 
 
 def test_valid_process(mock_competitions, mock_clubs):
     # Test login user
